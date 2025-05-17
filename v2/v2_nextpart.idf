@@ -1,6 +1,9 @@
 
-
-
+! 
+! -------------------------------------------------------------
+! Rest part of IDF objects
+! -------------------------------------------------------------
+! 
 
 Version,
   9.6;                                    !- Version Identifier
@@ -213,37 +216,22 @@ Building,
   ,                                       !- Maximum Number of Warmup Days
   ;                                       !- Minimum Number of Warmup Days
 
-
-ZoneControl:Thermostat,
-  Thermal Zone 1 Thermostat,              !- Name
-  Thermal Zone 1,                         !- Zone or ZoneList Name
-  Thermal Zone 1 Thermostat Schedule,     !- Control Type Schedule Name
-  ThermostatSetpoint:DualSetpoint,        !- Control 1 Object Type
-  Thermostat Setpoint Dual Setpoint 1,    !- Control 1 Name
-  ,                                       !- Control 2 Object Type
-  ,                                       !- Control 2 Name
-  ,                                       !- Control 3 Object Type
-  ,                                       !- Control 3 Name
-  ,                                       !- Control 4 Object Type
-  ,                                       !- Control 4 Name
-  0;                                      !- Temperature Difference Between Cutout And Setpoint {deltaC}
-
 Schedule:Compact,
-  Thermal Zone 1 Thermostat Schedule,     !- Name
-  Thermal Zone 1 Thermostat Schedule Type Limits, !- Schedule Type Limits Name
+  Thermostat Schedule,     !- Name
+  Thermostat Schedule Type Limits, !- Schedule Type Limits Name
   Through: 12/31,                         !- Field 1
   For: AllDays,                           !- Field 2
   Until: 24:00,                           !- Field 3
   4;                                      !- Field 4
 
 ScheduleTypeLimits,
-  Thermal Zone 1 Thermostat Schedule Type Limits, !- Name
+  Thermostat Schedule Type Limits, !- Name
   0,                                      !- Lower Limit Value {BasedOnField A3}
   4,                                      !- Upper Limit Value {BasedOnField A3}
   DISCRETE;                               !- Numeric Type
 
 ThermostatSetpoint:DualSetpoint,
-  Thermostat Setpoint Dual Setpoint 1,    !- Name
+  Thermostat Setpoint Dual Setpoint,    !- Name
   HtgSetp,                                !- Heating Setpoint Temperature Schedule Name
   ClgSetp;                                !- Cooling Setpoint Temperature Schedule Name
 
@@ -340,60 +328,6 @@ Schedule:Day:Interval,
   No,                                     !- Interpolate to Timestep
   24:00,                                  !- Time 1 {hh:mm}
   26.7;                                   !- Value Until Time 1
-! 
-! HVACTemplate:Zone:IdealLoadsAirSystem,
-!   Thermal Zone 1,                         !- Zone Name
-!   ,                                       !- Template Thermostat Name
-!   ,                                       !- System Availability Schedule Name
-!   ,                                       !- Maximum Heating Supply Air Temperature {C}
-!   ,                                       !- Minimum Cooling Supply Air Temperature {C}
-!   ,                                       !- Maximum Heating Supply Air Humidity Ratio {kgWater/kgDryAir}
-!   ,                                       !- Minimum Cooling Supply Air Humidity Ratio {kgWater/kgDryAir}
-!   ,                                       !- Heating Limit
-!   ,                                       !- Maximum Heating Air Flow Rate {m3/s}
-!   ,                                       !- Maximum Sensible Heating Capacity {W}
-!   ,                                       !- Cooling Limit
-!   ,                                       !- Maximum Cooling Air Flow Rate {m3/s}
-!   ,                                       !- Maximum Total Cooling Capacity {W}
-!   ,                                       !- Heating Availability Schedule Name
-!   ,                                       !- Cooling Availability Schedule Name
-!   ,                                       !- Dehumidification Control Type
-!   ,                                       !- Cooling Sensible Heat Ratio {dimensionless}
-!   ,                                       !- Dehumidification Setpoint {percent}
-!   ,                                       !- Humidification Control Type
-!   ,                                       !- Humidification Setpoint {percent}
-!   ,                                       !- Outdoor Air Method
-!   ,                                       !- Outdoor Air Flow Rate per Person {m3/s}
-!   ,                                       !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
-!   ,                                       !- Outdoor Air Flow Rate per Zone {m3/s}
-!   ,                                       !- Design Specification Outdoor Air Object Name
-!   ;                                       !- Demand Controlled Ventilation Type
-
-Sizing:Zone,
-  Thermal Zone 1,                         !- Zone or ZoneList Name
-  SupplyAirTemperature,                   !- Zone Cooling Design Supply Air Temperature Input Method
-  14,                                     !- Zone Cooling Design Supply Air Temperature {C}
-  11.11,                                  !- Zone Cooling Design Supply Air Temperature Difference {deltaC}
-  SupplyAirTemperature,                   !- Zone Heating Design Supply Air Temperature Input Method
-  40,                                     !- Zone Heating Design Supply Air Temperature {C}
-  11.11,                                  !- Zone Heating Design Supply Air Temperature Difference {deltaC}
-  0.0085,                                 !- Zone Cooling Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-  0.008,                                  !- Zone Heating Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-  Ventilation,                            !- Design Specification Outdoor Air Object Name
-  ,                                       !- Zone Heating Sizing Factor
-  ,                                       !- Zone Cooling Sizing Factor
-  DesignDay,                              !- Cooling Design Air Flow Method
-  0,                                      !- Cooling Design Air Flow Rate {m3/s}
-  0.000762,                               !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
-  0,                                      !- Cooling Minimum Air Flow {m3/s}
-  0,                                      !- Cooling Minimum Air Flow Fraction
-  DesignDay,                              !- Heating Design Air Flow Method
-  0,                                      !- Heating Design Air Flow Rate {m3/s}
-  0.002032,                               !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
-  0.1415762,                              !- Heating Maximum Air Flow {m3/s}
-  0.3,                                    !- Heating Maximum Air Flow Fraction
-  ,                                       !- Design Specification Zone Air Distribution Object Name
-  No;                                     !- Account for Dedicated Outdoor Air System
 
 Schedule:Constant,
   Always_On,                              !- Name
@@ -562,12 +496,10 @@ Material,
   0.85,                                   !- Solar Absorptance
   0.85;                                   !- Visible Absorptance
 
-
-
 ! roof insu
 
 Material,
-  Roof Insulation [RSI 3.5],                   !- Name
+  Roof Insulation [3.5],                   !- Name
   MediumRough,                            !- Roughness
   0.1693,                                 !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -578,7 +510,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 4.3],                   !- Name
+  Roof Insulation [4.3],                   !- Name
   MediumRough,                            !- Roughness
   0.2105,                                 !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -589,7 +521,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 5.4],                   !- Name
+  Roof Insulation [5.4],                   !- Name
   MediumRough,                            !- Roughness
   0.263,                                  !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -600,7 +532,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 6.0],                   !- Name
+  Roof Insulation [6.0],                   !- Name
   MediumRough,                            !- Roughness
   0.2941,                                 !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -611,7 +543,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 0.8],                   !- Name
+  Roof Insulation [0.8],                   !- Name
   MediumRough,                            !- Roughness
   0.0337000000000001,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -622,7 +554,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 1.1],                   !- Name
+  Roof Insulation [1.1],                   !- Name
   MediumRough,                            !- Roughness
   0.0452,                                 !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -633,7 +565,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 1.3],                   !- Name
+  Roof Insulation [1.3],                   !- Name
   MediumRough,                            !- Roughness
   0.0565999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -644,7 +576,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 1.6],                   !- Name
+  Roof Insulation [1.6],                   !- Name
   MediumRough,                            !- Roughness
   0.0680999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -655,7 +587,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 1.8],                   !- Name
+  Roof Insulation [1.8],                   !- Name
   MediumRough,                            !- Roughness
   0.0793999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -666,7 +598,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 2.1],                   !- Name
+  Roof Insulation [2.1],                   !- Name
   MediumRough,                            !- Roughness
   0.0913999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -677,7 +609,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Roof Insulation [RSI 2.6],                   !- Name
+  Roof Insulation [2.6],                   !- Name
   MediumRough,                            !- Roughness
   0.1104,                                 !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -691,7 +623,7 @@ Material,
 ! wall insu
 
 Material,
-  Wall Insulation [RSI 3.5],                   !- Name
+  Wall Insulation [3.5],                   !- Name
   MediumRough,                            !- Roughness
   0.1693,                                 !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -702,7 +634,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 4.3],                   !- Name
+  Wall Insulation [4.3],                   !- Name
   MediumRough,                            !- Roughness
   0.2105,                                 !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -713,7 +645,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 5.4],                   !- Name
+  Wall Insulation [5.4],                   !- Name
   MediumRough,                            !- Roughness
   0.263,                                  !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -724,7 +656,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 6.0],                   !- Name
+  Wall Insulation [6.0],                   !- Name
   MediumRough,                            !- Roughness
   0.2941,                                 !- Thickness {m}
   0.049,                                  !- Conductivity {W/m-K}
@@ -735,7 +667,7 @@ Material,
   0.7;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 0.8],                   !- Name
+  Wall Insulation [0.8],                   !- Name
   MediumRough,                            !- Roughness
   0.0337000000000001,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -746,7 +678,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 1.1],                   !- Name
+  Wall Insulation [1.1],                   !- Name
   MediumRough,                            !- Roughness
   0.0452,                                 !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -757,7 +689,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 1.3],                   !- Name
+  Wall Insulation [1.3],                   !- Name
   MediumRough,                            !- Roughness
   0.0565999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -768,7 +700,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 1.6],                   !- Name
+  Wall Insulation [1.6],                   !- Name
   MediumRough,                            !- Roughness
   0.0680999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -779,7 +711,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 1.8],                   !- Name
+  Wall Insulation [1.8],                   !- Name
   MediumRough,                            !- Roughness
   0.0793999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -790,7 +722,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 2.1],                   !- Name
+  Wall Insulation [2.1],                   !- Name
   MediumRough,                            !- Roughness
   0.0913999999999999,                     !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -801,7 +733,7 @@ Material,
   0.5;                                    !- Visible Absorptance
 
 Material,
-  Wall Insulation [RSI 2.6],                   !- Name
+  Wall Insulation [2.6],                   !- Name
   MediumRough,                            !- Roughness
   0.1104,                                 !- Thickness {m}
   0.0432,                                 !- Conductivity {W/m-K}
@@ -1216,12 +1148,6 @@ SizingPeriod:DesignDay,
   0,                                      !- Sky Clearness
   ,                                       !- Maximum Number Warmup Days
   FullResetAtBeginEnvironment;            !- Begin Environment Reset Mode
-
-ZoneList,
-  Space Type 1,                           !- Name
-  Thermal Zone 1;                         !- Zone Name 1
-
-
 
 OutputControl:Table:Style,
   HTML;                                   !- Column Separator
@@ -1767,50 +1693,3 @@ Output:Meter,
 ! New objects created from ExpandObjects
 ! -------------------------------------------------------------
 ! 
-
-ZoneHVAC:EquipmentConnections,
-  Thermal Zone 1,                                          !- Zone Name
-  Thermal Zone 1 Equipment,                                !- Zone Conditioning Equipment List Name
-  Thermal Zone 1 Ideal Loads Supply Inlet,                 !- Zone Air Inlet Node or NodeList Name
-  ,                                                        !- Zone Air Exhaust Node or NodeList Name
-  Thermal Zone 1 Zone Air Node,                            !- Zone Air Node Name
-  Thermal Zone 1 Return Outlet;                            !- Zone Return Air Node Name
-
-ZoneHVAC:EquipmentList,
-  Thermal Zone 1 Equipment,                                !- Name
-  SequentialLoad,                                          !- Load Distribution Scheme
-  ZoneHVAC:IdealLoadsAirSystem,                            !- Zone Equipment Object Type
-  Thermal Zone 1 Ideal Loads Air System,                   !- Zone Equipment Name
-  1,                                                       !- Zone Equipment Cooling Sequence
-  1,                                                       !- Zone Equipment Heating or No-Load Sequence
-  ,                                                        !- Zone Equipment Sequential Cooling Fraction Schedule Name
-  ;                                                        !- Zone Equipment Sequential Heating Fraction Schedule Name
-
-ZoneHVAC:IdealLoadsAirSystem,
-  Thermal Zone 1 Ideal Loads Air System,                   !- Name
-  ,                                                        !- Availability Schedule Name
-  Thermal Zone 1 Ideal Loads Supply Inlet,                 !- Zone Supply Air Node Name
-  ,                                                        !- Zone Exhaust Air Node Name
-  ,                                                        !- System Inlet Air Node Name
-  50,                                                      !- Maximum Heating Supply Air Temperature [C]
-  13,                                                      !- Minimum Cooling Supply Air Temperature [C]
-  0.0156,                                                  !- Maximum Heating Supply Air Humidity Ratio [kg-H20/kg-air]
-  0.0077,                                                  !- Minimum Cooling Supply Air Humidity Ratio [kg-H20/kg-air]
-  NoLimit,                                                 !- Heating Limit
-  ,                                                        !- Maximum Heating Air Flow Rate {m3/s}
-  ,                                                        !- Maximum Sensible Heating Capacity {m3/s}
-  NoLimit,                                                 !- Cooling Limit
-  ,                                                        !- Maximum Cooling Air Flow Rate {m3/s}
-  ,                                                        !- Maximum Total Cooling Capacity {m3/s}
-  ,                                                        !- Heating Availability Schedule Name
-  ,                                                        !- Cooling Availability Schedule Name
-  ConstantSensibleHeatRatio,                               !- Dehumidification Control Type
-  0.7,                                                     !- Cooling Sensible Heat Ratio
-  None,                                                    !- Humidification Control Type
-  ,                                                        !- Design Specification Outdoor Air Object Name
-  ,                                                        !- Outdoor Air Inlet Node Name
-  None,                                                    !- Demand Controlled Ventilation Type
-  NoEconomizer,                                            !- Outdoor Air Economizer Type
-  None,                                                    !- Heat Recovery Type
-  0.7,                                                     !- Sensible Heat Recovery Effectiveness
-  0.65;                                                    !- Latent Heat Recovery Effectiveness
