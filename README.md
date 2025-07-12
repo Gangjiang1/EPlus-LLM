@@ -70,15 +70,12 @@ Here provides a code snippet to show you how to load the EPlus-LLM and auto-gene
 ```python
 # ⚠️ Please make sure you have adequate GPU memory.
 # ⚠️ Please make sure your EnergyPlus version is 9.6 for successful running.
+# ⚠️ Download the v2_nextpart.idf file from the EPlus-LLMv2 repo and place it in your current working directory.
 
-# ! pip install -U bitsandbytes -q
+# ! pip install -U bitsandbytes -q # pip this repo at your first run
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 import torch
 from peft import PeftModel, PeftConfig
-
-# Load the rest port of IDF file.
-file_path = "v2_nextpart.idf"
-output_path = "v2_final.idf"
 
 # Load the EPlus-LLMv2 config. 
 peft_model_id = "EPlus-LLM/EPlus-LLMv2"
@@ -120,11 +117,50 @@ Occupancy starts at 7:00 and ends at 18:00. The occupancy rate is 1. The unoccup
 The heating setpoint is 21.54 Celsius in occupancy period and 15.86 Celsius in unoccupancy period.
 The cooling setpoint is 22.6 Celsius in occupancy period and 26.72 Celsius in unoccupancy period.
 """
+
+# EPlus-LLM generating...
 input_ids = tokenizer(input, return_tensors="pt", truncation=False)
 generated_ids = model.generate(input_ids = input_ids.input_ids,
                            attention_mask = input_ids.attention_mask,
                            generation_config = generation_config)
 generated_output = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
+
+# Default thermal zones setting 
+zone_1 = """ZoneHVAC:EquipmentConnections,Thermal Zone 1,Thermal Zone 1 Equipment,Thermal Zone 1 Ideal Loads Supply Inlet,,Thermal Zone 1 Zone Air Node,Thermal Zone 1 Return Outlet;
+ZoneHVAC:EquipmentList,Thermal Zone 1 Equipment,SequentialLoad,ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 1 Ideal Loads Air System,1,1,,;
+ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 1 Ideal Loads Air System,,Thermal Zone 1 Ideal Loads Supply Inlet,,,50,13,0.0156,0.0077,NoLimit,,,NoLimit,,,,,ConstantSensibleHeatRatio,0.7,None,,,None,NoEconomizer,None,0.7,0.65;
+ZoneControl:Thermostat,Thermal Zone 1 Thermostat,Thermal Zone 1,Thermostat Schedule,ThermostatSetpoint:DualSetpoint,Thermostat Setpoint Dual Setpoint,,,,,,,0;
+Sizing:Zone,Thermal Zone 1,SupplyAirTemperature,14,11.11,SupplyAirTemperature,40,11.11,0.0085,0.008,Ventilation,,,DesignDay,0,0.000762,0,0,DesignDay,0,0.002032,0.1415762,0.3,,No;"""
+zone_2 = """ZoneHVAC:EquipmentConnections,Thermal Zone 2,Thermal Zone 2 Equipment,Thermal Zone 2 Ideal Loads Supply Inlet,,Thermal Zone 2 Zone Air Node,Thermal Zone 2 Return Outlet;
+ZoneHVAC:EquipmentList,Thermal Zone 2 Equipment,SequentialLoad,ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 2 Ideal Loads Air System,1,1,,;
+ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 2 Ideal Loads Air System,,Thermal Zone 2 Ideal Loads Supply Inlet,,,50,13,0.0156,0.0077,NoLimit,,,NoLimit,,,,,ConstantSensibleHeatRatio,0.7,None,,,None,NoEconomizer,None,0.7,0.65;
+ZoneControl:Thermostat,Thermal Zone 2 Thermostat,Thermal Zone 2,Thermostat Schedule,ThermostatSetpoint:DualSetpoint,Thermostat Setpoint Dual Setpoint,,,,,,,0;
+Sizing:Zone,Thermal Zone 2,SupplyAirTemperature,14,11.11,SupplyAirTemperature,40,11.11,0.0085,0.008,Ventilation,,,DesignDay,0,0.000762,0,0,DesignDay,0,0.002032,0.1415762,0.3,,No;"""
+zone_3 = """ZoneHVAC:EquipmentConnections,Thermal Zone 3,Thermal Zone 3 Equipment,Thermal Zone 3 Ideal Loads Supply Inlet,,Thermal Zone 3 Zone Air Node,Thermal Zone 3 Return Outlet;
+ZoneHVAC:EquipmentList,Thermal Zone 3 Equipment,SequentialLoad,ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 3 Ideal Loads Air System,1,1,,;
+ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 3 Ideal Loads Air System,,Thermal Zone 3 Ideal Loads Supply Inlet,,,50,13,0.0156,0.0077,NoLimit,,,NoLimit,,,,,ConstantSensibleHeatRatio,0.7,None,,,None,NoEconomizer,None,0.7,0.65;
+ZoneControl:Thermostat,Thermal Zone 3 Thermostat,Thermal Zone 3,Thermostat Schedule,ThermostatSetpoint:DualSetpoint,Thermostat Setpoint Dual Setpoint,,,,,,,0;
+Sizing:Zone,Thermal Zone 3,SupplyAirTemperature,14,11.11,SupplyAirTemperature,40,11.11,0.0085,0.008,Ventilation,,,DesignDay,0,0.000762,0,0,DesignDay,0,0.002032,0.1415762,0.3,,No;"""
+zone_4 = """ZoneHVAC:EquipmentConnections,Thermal Zone 4,Thermal Zone 4 Equipment,Thermal Zone 4 Ideal Loads Supply Inlet,,Thermal Zone 4 Zone Air Node,Thermal Zone 4 Return Outlet;
+ZoneHVAC:EquipmentList,Thermal Zone 4 Equipment,SequentialLoad,ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 4 Ideal Loads Air System,1,1,,;
+ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 4 Ideal Loads Air System,,Thermal Zone 4 Ideal Loads Supply Inlet,,,50,13,0.0156,0.0077,NoLimit,,,NoLimit,,,,,ConstantSensibleHeatRatio,0.7,None,,,None,NoEconomizer,None,0.7,0.65;
+ZoneControl:Thermostat,Thermal Zone 4 Thermostat,Thermal Zone 4,Thermostat Schedule,ThermostatSetpoint:DualSetpoint,Thermostat Setpoint Dual Setpoint,,,,,,,0;
+Sizing:Zone,Thermal Zone 4,SupplyAirTemperature,14,11.11,SupplyAirTemperature,40,11.11,0.0085,0.008,Ventilation,,,DesignDay,0,0.000762,0,0,DesignDay,0,0.002032,0.1415762,0.3,,No;"""
+zone_5 = """ZoneHVAC:EquipmentConnections,Thermal Zone 5,Thermal Zone 5 Equipment,Thermal Zone 5 Ideal Loads Supply Inlet,,Thermal Zone 5 Zone Air Node,Thermal Zone 5 Return Outlet;
+ZoneHVAC:EquipmentList,Thermal Zone 5 Equipment,SequentialLoad,ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 5 Ideal Loads Air System,1,1,,;
+ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 5 Ideal Loads Air System,,Thermal Zone 5 Ideal Loads Supply Inlet,,,50,13,0.0156,0.0077,NoLimit,,,NoLimit,,,,,ConstantSensibleHeatRatio,0.7,None,,,None,NoEconomizer,None,0.7,0.65;
+ZoneControl:Thermostat,Thermal Zone 5 Thermostat,Thermal Zone 5,Thermostat Schedule,ThermostatSetpoint:DualSetpoint,Thermostat Setpoint Dual Setpoint,,,,,,,0;
+Sizing:Zone,Thermal Zone 5,SupplyAirTemperature,14,11.11,SupplyAirTemperature,40,11.11,0.0085,0.008,Ventilation,,,DesignDay,0,0.000762,0,0,DesignDay,0,0.002032,0.1415762,0.3,,No;"""
+generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 1;", zone_1)
+generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 2;", zone_2)
+generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 3;", zone_3)
+generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 4;", zone_4)
+generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 5;", zone_5)
+
+# Load the rest port of IDF file.
+file_path = "v2_nextpart.idf" # File is in the repo. Please download.
+output_path = "v2_final.idf"
+
 # Output the building energy model in IDF file
 with open(file_path, 'r', encoding='utf-8') as file:
     nextpart = file.read()
