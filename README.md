@@ -151,6 +151,7 @@ ZoneHVAC:EquipmentList,Thermal Zone 5 Equipment,SequentialLoad,ZoneHVAC:IdealLoa
 ZoneHVAC:IdealLoadsAirSystem,Thermal Zone 5 Ideal Loads Air System,,Thermal Zone 5 Ideal Loads Supply Inlet,,,50,13,0.0156,0.0077,NoLimit,,,NoLimit,,,,,ConstantSensibleHeatRatio,0.7,None,,,None,NoEconomizer,None,0.7,0.65;
 ZoneControl:Thermostat,Thermal Zone 5 Thermostat,Thermal Zone 5,Thermostat Schedule,ThermostatSetpoint:DualSetpoint,Thermostat Setpoint Dual Setpoint,,,,,,,0;
 Sizing:Zone,Thermal Zone 5,SupplyAirTemperature,14,11.11,SupplyAirTemperature,40,11.11,0.0085,0.008,Ventilation,,,DesignDay,0,0.000762,0,0,DesignDay,0,0.002032,0.1415762,0.3,,No;"""
+generated_output = generated_output.replace(";",";\n")
 generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 1;", zone_1)
 generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 2;", zone_2)
 generated_output = generated_output.replace("Ideal Load System Setting for Thermal Zone 3;", zone_3)
